@@ -1,4 +1,4 @@
-package com.bbar.sns;
+package com.bbar.sns.hello;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +10,7 @@ public class HelloController {
 	@ResponseBody
 	@GetMapping("/hello")
 	public String getHello() {
-		return "Hello World!!!!!";
+		return "Hello World!!";
 	}
 
 }
