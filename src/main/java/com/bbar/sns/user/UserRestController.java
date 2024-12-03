@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bbar.sns.user.domain.User;
 import com.bbar.sns.user.service.UserService;
 
 @RestController
@@ -57,6 +58,23 @@ public class UserRestController {
 			resultMap.put("isDuplicate", false);
 		}
 				
+		return resultMap;
+	}
+	
+	@PostMapping("/login")
+	public Map<String, String> login(
+			@RequestParam("userId") String userId
+			, @RequestParam("password") String password) {
+		
+		User user = userService.getUser(userId, password);
+		
+		Map<String, String> resultMap = new HashMap<>();
+		if(user != null) {
+			resultMap.put("result", "success"); 
+		} else {
+			resultMap.put("result", "fail");			
+		}
+		
 		return resultMap;
 	}
 
