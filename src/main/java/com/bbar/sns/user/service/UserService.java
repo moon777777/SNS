@@ -41,7 +41,9 @@ public class UserService {
 	public User getUser(String userId
 			, String password) {
 		
-		return userRepository.selectUser(userId, password);
+		String endcodingPassword = MD5HashingEncoder.encode(password);
+		
+		return userRepository.selectUser(userId, endcodingPassword);
 	
 	}
 	
