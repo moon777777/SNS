@@ -34,11 +34,7 @@ public class UserService {
 	public boolean isDuplicateUserId(String userId) {
 		int count = userRepository.selectCountUserId(userId);
 		
-		if(count >= 1) {
-			return true;
-		} else {
-			return false;
-		}
+		return count >= 1;
 	}
 	
 	
