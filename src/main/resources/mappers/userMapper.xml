@@ -34,6 +34,7 @@
 	
 	</select>
 	
+	
 	<select id="selectUser" parameterType="map"
  	resultType="com.bbar.sns.user.domain.User">
  		SELECT

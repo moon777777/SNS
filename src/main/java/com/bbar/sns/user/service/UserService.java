@@ -39,9 +39,10 @@ public class UserService {
 	}
 	
 	public User getUser(String userId
-			, String Password) {
+			, String password) {
 		
-		return userRepository.selectUser(userId, Password);
+		
+		return userRepository.selectUser(userId, password);
 		
 		
 	}

@@ -17,6 +17,7 @@ public interface UserRepository {
 	
 	public int selectCountUserId(@Param("userId") String userId);
 	
+	
 	public User selectUser(
 			@Param("userId") String userId
 			, @Param("password") String password

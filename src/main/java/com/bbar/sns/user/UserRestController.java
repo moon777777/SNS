@@ -61,6 +61,7 @@ public class UserRestController {
 		return resultMap;
 	}
 	
+	
 	@PostMapping("/login")
 	public Map<String, String> login(
 			@RequestParam("userId") String userId
@@ -69,6 +70,7 @@ public class UserRestController {
 		User user = userService.getUser(userId, password);
 		
 		Map<String, String> resultMap = new HashMap<>();
+		
 		if(user != null) {
 			resultMap.put("result", "success"); 
 		} else {
