@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.bbar.sns.user.repository.UserRepository">
+ 	<insert id="insertUser" parameterType="map">
+ 		INSERT INTO
+ 			`user`
+ 		(
+ 			`userId`
+ 			, `password`
+ 			, `name`
+ 			, `nickname`
+ 		)
+ 		VALUE
+ 		(
+ 			#{userId}
+ 			, #{password}
+ 			, #{name}
+ 			, #{nickname}
+ 		)
+ 			
+ 	
+ 	</insert>
+ 	
+ 	<select id="selectCountUserId" parameterType="string" resultType="int">
+		SELECT 
+			count(*)
+		FROM 
+			`user`
+		WHERE 
+			`userId` = #{userId}
+	
+	</select>
+ </mapper>

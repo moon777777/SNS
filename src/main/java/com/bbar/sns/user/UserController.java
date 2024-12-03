@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UserController {
 	
+	
 	@GetMapping("/login-view")
 	public String inputLogin() {
 		return "user/login";
