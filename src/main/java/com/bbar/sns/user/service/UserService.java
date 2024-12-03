@@ -3,6 +3,7 @@ package com.bbar.sns.user.service;
 import org.springframework.stereotype.Service;
 
 import com.bbar.sns.common.MD5HashingEncoder;
+import com.bbar.sns.user.domain.User;
 import com.bbar.sns.user.repository.UserRepository;
 
 @Service
@@ -35,6 +36,13 @@ public class UserService {
 		int count = userRepository.selectCountUserId(userId);
 		
 		return count >= 1;
+	}
+	
+	public User getUser(String userId
+			, String password) {
+		
+		return userRepository.selectUser(userId, password);
+	
 	}
 	
 	
