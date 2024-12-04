@@ -31,7 +31,8 @@
 		<script layout:fragment="script">
 			$(document).ready(function(){
 				
-				let duplicateCheck = "";
+				var isduplicateCheck = false; //전역변수
+				var isduplicateId = true;
 				
 				$("#duplicateBtn").on("click", function() {
 					let userId = $("#userIdInput").val();
@@ -46,14 +47,15 @@
 						, url:"/user/duplicate-id"
 						, data:{"userId":userId}
 						, success:function(response) {
+							isduplicateCheck = true;
 							if(response.isDuplicate) {
 								$("#duplicateText").removeClass("d-none");
 								$("#availableText").addClass("d-none");
-								duplicateCheck = "중복";
+								isduplicateId = true;
 							} else {
 								$("#availableText").removeClass("d-none");
 								$("#duplicateText").addClass("d-none");
-								duplicateCheck = "가능";
+								isduplicateId = false;
 							}
 							
 						}
@@ -61,6 +63,10 @@
 							alert("중복확인 에러!");
 						}
 					});
+				});
+				
+				$("#userIdInput").on("input", function() {
+					isduplicateCheck = false;
 				});
 				
 				
@@ -96,12 +102,12 @@
 						return;
 					}
 					
-					if(duplicateCheck == "") {
+					if(!isduplicateCheck) {
 						alert("중복확인을 해주세요");
 						return;
 					}
 					
-					if(duplicateCheck == "중복") {
+					if(isduplicateId) {
 						alert("중복된 아이디 입니다");
 						return;
 					}
