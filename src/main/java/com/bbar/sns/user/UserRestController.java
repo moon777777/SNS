@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bbar.sns.user.domain.User;
 import com.bbar.sns.user.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/user")
 public class UserRestController {
@@ -64,13 +67,20 @@ public class UserRestController {
 	@PostMapping("/login")
 	public Map<String, String> login(
 			@RequestParam("userId") String userId
-			, @RequestParam("password") String password) {
+			, @RequestParam("password") String password
+			, HttpServletRequest request) {
 		
 		User user = userService.getUser(userId, password);
 		
 		Map<String, String> resultMap = new HashMap<>();
-		
+
 		if(user != null) {
+			
+			HttpSession session = request.getSession();
+			
+			session.setAttribute("userId", user.getId());
+			session.setAttribute("userNickname", user.getNickname());
+			
 			resultMap.put("result", "success"); 
 		} else {
 			resultMap.put("result", "fail");			

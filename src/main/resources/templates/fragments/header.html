@@ -1,0 +1,8 @@
+		<header>
+			<div th:if="${session.userId != null}" class="timeline d-flex align-items-center justify-content-between">
+				<h1 class="ml-3"><a class="text-dark" href="/post/timeline-view">Waste of Life</a></h1>
+				<div class="mr-3">
+					<span th:text="|${session.userNickname}님|"></span><a href="/user/logout"> 로그아웃</a>
+				</div>			
+			</div>
+		</header>

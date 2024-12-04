@@ -43,9 +43,9 @@
 						, data:{"userId":id, "password":password}
 						, success:function(response) {
 							if(response.result == "success") {
-								alert("로그인 완료!");
+								location.href = "/post/timeline-view";
 							} else {
-								alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
+								alert("아이디와 비밀번호를 확인해주세요");
 							}
 						}
 						, error:function() {
