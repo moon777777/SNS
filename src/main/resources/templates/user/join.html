@@ -67,6 +67,9 @@
 				
 				$("#userIdInput").on("input", function() {
 					isduplicateCheck = false;
+					isduplicateId = true;
+					$("#duplicateText").addClass("d-none");
+					$("#availableText").addClass("d-none");
 				});
 				
 				

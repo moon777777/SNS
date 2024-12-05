@@ -6,16 +6,19 @@
         
 		<section layout:fragment="contents" class="contents d-flex justify-content-center mb-5">
 			<div class="my-5">
-				<img width="285" src="/static/images/life.png">
+				<img width="305" src="/static/images/life.png">
 			</div>
 			<div class="input-box my-5 ml-5">
 				<div class="border p-5 rounded">
 					<h1 class="text-center">Waste of Life</h1>
-					<input type="text" class="form-control mt-5" id="idInput" placeholder="아이디">
-					<input type="password" class="form-control mt-2" id="passwordInput" placeholder="비밀번호">
-					<button class= "btn btn-info btn-block mt-4" id="loginBtn">로그인</button>				
+					<form id="loginForm">
+						<input type="text" class="form-control mt-5" id="idInput" placeholder="아이디">
+						<input type="password" class="form-control mt-2" id="passwordInput" placeholder="비밀번호">
+						<button type="submit" class= "btn btn-info btn-block mt-4" id="loginBtn">로그인</button>
+						<div class="text-center text-secondary mt-4">비밀번호를 잊으셨나요?</div>									
+					</form>
 				</div>
-				<div class="border mt-4 p-4 rounded">
+				<div class="border mt-3 p-4 rounded">
 					<div class="text-center">계정이 없으신가요? <a href="/user/join-view">가입하기</a></div>
 				</div>
 			</div>
@@ -23,7 +26,11 @@
 		
 		<script layout:fragment="script">
 			$(document).ready(function(){
-				$("#loginBtn").on("click", function() {
+				
+				$("#loginForm").on("submit", function(e){
+					// submit 이벤트가 가진 고유의 기능을 막는다
+					e.preventDefault();
+				
 					let id = $("#idInput").val();
 					let password = $("#passwordInput").val();
 					

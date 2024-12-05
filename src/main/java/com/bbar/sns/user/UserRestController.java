@@ -68,16 +68,14 @@ public class UserRestController {
 	public Map<String, String> login(
 			@RequestParam("userId") String userId
 			, @RequestParam("password") String password
-			, HttpServletRequest request) {
+			, HttpSession session) {
 		
 		User user = userService.getUser(userId, password);
 		
 		Map<String, String> resultMap = new HashMap<>();
 
 		if(user != null) {
-			
-			HttpSession session = request.getSession();
-			
+
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("userNickname", user.getNickname());
 			
