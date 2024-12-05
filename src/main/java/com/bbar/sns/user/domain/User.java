@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class User {
 	
 	private int id;
-	private String userId;
+	private String loginId;
 	private String password;
 	private String name;
 	private String nickname;
@@ -18,11 +18,11 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getUserId() {
-		return userId;
+	public String getLoginId() {
+		return loginId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
 	}
 	public String getPassword() {
 		return password;
@@ -54,6 +54,8 @@ public class User {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+	
 	
 	
 

@@ -16,14 +16,14 @@ public class UserService {
 	}
 	
 	public boolean addUser(
-			String userId
+			String loginId
 			, String password
 			, String name
 			, String nickname) {
 		
 		String endcodingPassword = MD5HashingEncoder.encode(password);
 		
-		int count = userRepository.insertUser(userId, endcodingPassword, name, nickname);
+		int count = userRepository.insertUser(loginId, endcodingPassword, name, nickname);
 		
 		if(count == 1) {
 			return true;
@@ -32,18 +32,18 @@ public class UserService {
 		}
 	}
 	
-	public boolean isDuplicateUserId(String userId) {
-		int count = userRepository.selectCountUserId(userId);
+	public boolean isDuplicateLoginId(String loginId) {
+		int count = userRepository.selectCountLoginId(loginId);
 		
 		return count >= 1;
 	}
 	
-	public User getUser(String userId
+	public User getUser(String loginId
 			, String password) {
 		
 		String endcodingPassword = MD5HashingEncoder.encode(password);
 		
-		return userRepository.selectUser(userId, endcodingPassword);
+		return userRepository.selectUser(loginId, endcodingPassword);
 	
 	}
 	

@@ -23,8 +23,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/logout")
-	public String logout(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	public String logout(HttpSession session) {
 		
 		session.removeAttribute("userId");
 		session.removeAttribute("userNickname");

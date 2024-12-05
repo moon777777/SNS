@@ -30,7 +30,7 @@ public class UserRestController {
 	
 	@PostMapping("/join")
 	public Map<String, String> join(
-			@RequestParam("userId") String userId
+			@RequestParam("loginId") String loginId
 			, @RequestParam("password") String password
 			, @RequestParam("name") String name
 			, @RequestParam("nickname") String nickname 
@@ -38,7 +38,7 @@ public class UserRestController {
 		
 		Map<String, String> resultMap = new HashMap<>();
 		
-		if(userService.addUser(userId, password, name, nickname)) {
+		if(userService.addUser(loginId, password, name, nickname)) {
 			resultMap.put("result", "success");
 		} else {
 			resultMap.put("result", "fail");
@@ -49,9 +49,9 @@ public class UserRestController {
 	
 	@GetMapping("/duplicate-id")
 	@ResponseBody
-	public Map<String, Boolean> isDuplicateUserId(@RequestParam("userId") String userId) {
+	public Map<String, Boolean> isDuplicateLoginId(@RequestParam("loginId") String loginId) {
 		
-		boolean isDuplicate = userService.isDuplicateUserId(userId);
+		boolean isDuplicate = userService.isDuplicateLoginId(loginId);
 		
 		Map<String, Boolean> resultMap = new HashMap<>();
 
@@ -66,11 +66,11 @@ public class UserRestController {
 	
 	@PostMapping("/login")
 	public Map<String, String> login(
-			@RequestParam("userId") String userId
+			@RequestParam("loginId") String loginId
 			, @RequestParam("password") String password
 			, HttpSession session) {
 		
-		User user = userService.getUser(userId, password);
+		User user = userService.getUser(loginId, password);
 		
 		Map<String, String> resultMap = new HashMap<>();
 

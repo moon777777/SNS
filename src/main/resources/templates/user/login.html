@@ -47,7 +47,7 @@
 					$.ajax({
 						type:"post"
 						, url: "/user/login"
-						, data:{"userId":id, "password":password}
+						, data:{"loginId":id, "password":password}
 						, success:function(response) {
 							if(response.result == "success") {
 								location.href = "/post/timeline-view";

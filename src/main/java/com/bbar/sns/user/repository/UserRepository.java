@@ -9,16 +9,16 @@ import com.bbar.sns.user.domain.User;
 public interface UserRepository {
 	
 	public int insertUser(
-			@Param("userId") String userId
+			@Param("loginId") String loginId
 			, @Param("password") String password
 			, @Param("name") String name
 			, @Param("nickname") String nickname 
 			);
 	
-	public int selectCountUserId(@Param("userId") String userId);
+	public int selectCountLoginId(@Param("loginId") String loginId);
 	
 	public User selectUser(
-			@Param("userId") String userId
+			@Param("loginId") String loginId
 			, @Param("password") String password
 			);
 
