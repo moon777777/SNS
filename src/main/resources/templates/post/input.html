@@ -5,15 +5,69 @@
         layout:decorate="~{layout/default}">
         
         <section layout:fragment="contents" class="contents d-flex justify-content-center mb-4">
-        <div class="input-box border rounded">
+        	<div class="input-box border rounded">
         		<a href="/post/timeline-view">
         		<i class="bi bi-x-lg text-dark" style="font-size: 20px;"></i>
         		</a>
-				<textarea rows="5" class="form-control border-0" id="contentsInput" placeholder="내용을 입력하세요."></textarea>
-				<div class="d-flex justify-content-between p-2">
-					<i class="bi bi-image big-font" id="imageIcon"></i>
-					<button type="button" class="btn btn-info btn-sm">입력</button>
-				</div>	
+				<textarea rows="5" class="form-control border-0" placeholder="내용을 입력하세요." id="contentsInput"></textarea>
+				<div class="d-flex p-2 justify-content-between">
+					<div class="d-flex">
+						<label for="fileInput"><i class="bi bi-image big-font" id="imageIcon" style="font-size: 20px;"></i></label>
+						<input type="file" id="fileInput" class="d-none">
+						<div id="fileInfo" class="ml-2" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>									
+					</div>
+					<button type="button" class="btn btn-info btn-sm" id="saveBtn">입력</button>	
+				</div>
 			</div>
 		</section>
+		
+		<script layout:fragment="script">
+			$(document).ready(function(){
+				 $("#fileInput").on("change", function() {
+			            let file = $("#fileInput")[0].files[0];
+			            let fileInfo = $("#fileInfo");
+
+			            if (file) {
+			                // 파일 이름을 표시하기
+			                let fileName = file.name;
+			                fileInfo.html("<span>" + fileName + "</span>");
+			            }
+				 });
+				
+				
+				$("#saveBtn").on("click", function(){
+					let contents = $("#contentsInput").val();
+					let file = $("#fileInput")[0].files[0];
+					
+					if(contents == "") {
+						alert("내용을 입력하세요")
+						return;
+					}
+					
+					let formData = new FormData();
+					formData.append("contents", contents);
+					formData.append("imageFile", file);
+					
+					$.ajax({
+						type:"post"
+						, url: "/post/create"
+						, data:formData
+						, enctype:"multipart/form-data"
+						, processData:false 
+						, contentType:false 
+						, success:function(response) {
+							if(response.result == "success") {
+								location.href = "/post/timeline-view"
+							} else {
+								alert("작성 실패");
+							}
+						}
+						, error:function() {
+							alert("작성 에러")
+						}
+					});
+					
+				});
+			});
+		</script>
 </html>

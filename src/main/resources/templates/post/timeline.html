@@ -4,28 +4,28 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout/default}">
         
-        <section layout:fragment="contents" class="contents d-flex justify-content-center mb-4">
+        <section layout:fragment="contents" class="contents d-flex justify-content-between mb-4">
+        	<div>
+        		
+        	</div>
         	<div class="time-box">
-	        	<div class="border rounded">
+	        	<div class="border rounded"th:each="post : ${postList}">
 	        		<div class="d-flex justify-content-between">
 		        		<div class = "p-2"><i class="bi bi-person-fill"></i>밍</div>
 						<div class="p-2"><i class="bi bi-three-dots-vertical"></i></div>
 	        		</div>
-	        		<img class= "w-100" src="https://cdn.pixabay.com/photo/2024/09/05/11/52/cats-9024710_1280.jpg">        	
+	        		<img class= "w-100" th:src="${post.imagePath}">        	
 		        	<div class="p-2">
-		        		<div><b>밍</b> 고양이</div>
+		        		<div class="mt-2" th:text="${post.contents}"><b>밍</b></div>
 		        		<div class="mt-2 ml-1">
 							<i class="bi bi-heart-fill text-danger unlike-icon"></i>1
 							<i class="bi bi-chat-left ml-2"></i>1
-							<hr>		        		
 		        		</div>
 					</div>
+					<hr>
 					<div class="comment-box">
-						<div class="pl-2">댓글</div>
 						<div class="p-2">
-							<div>
-								<b>댓글</b> 귀여워
-							</div>
+							<b>댓글</b> 귀여워
 						</div>
 						<div class="d-flex justify-content-between p-2">
 							<input type="text" class="mr-1 form-control col-10" placeholder="댓글 달기">
@@ -34,8 +34,8 @@
 					</div>
 	        	</div>
         	</div>
-        	 <a href="/post/create-view" class="position-absolute" style= "bottom: 40px; right: 120px;">
-            	<i class="bi bi-plus-circle-fill text-dark" style="font-size: 50px;"></i>
-       		 </a>
+	        	<a href="/post/create-view" class="d-flex align-items-end" style= "bottom: 80px; right: 100px;">
+	            	<i class="bi bi-plus-circle-fill text-dark" style="font-size: 50px;"></i>
+	       		</a>        	
         </section>
 </html>
