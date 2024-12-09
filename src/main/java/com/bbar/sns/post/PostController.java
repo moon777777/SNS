@@ -12,9 +12,4 @@ public class PostController {
 	public String timeLine() {
 		return "post/timeline";
 	}
-	
-	@GetMapping("/create-view")
-	public String input() {
-		return "post/input";
-	}
 }
