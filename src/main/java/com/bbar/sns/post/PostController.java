@@ -22,7 +22,7 @@ public class PostController {
 	
 	@GetMapping("/timeline-view")
 	public String timeLine(Model model) {
-		List<Post> postList = postService.getPost();
+		List<Post> postList = postService.getPostList();
 		
 		model.addAttribute("postList", postList);
 		

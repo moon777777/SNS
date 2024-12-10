@@ -52,7 +52,6 @@ public static final String FILE_UPLOAD_PATH = "C:\\Moon777\\SpringProject\\uploa
 		}
 		
 		// 클라이언트가 접근할 url path경로
-		// C:\\Moon777\\SpringProject\\upload\\memo\\파일이름 <- 이게 실제 경로
 		// 너무 복잡하니 images/파일이름.png 이걸로 매칭시켜 경로로 설정
 		
 		return "/images" + directoryName + "/" + file.getOriginalFilename();
