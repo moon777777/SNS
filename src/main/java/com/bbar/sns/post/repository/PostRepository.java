@@ -1,7 +1,6 @@
 package com.bbar.sns.post.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -25,7 +24,7 @@ public interface PostRepository {
 	
 	public List<Post> selectPost();
 
-	public Optional<Post> selectPost(int id);
+	
 	
 	
 

@@ -13,7 +13,11 @@ public class UserController {
 	
 	
 	@GetMapping("/login-view")
-	public String inputLogin() {
+	public String inputLogin(HttpSession session) {
+		
+		session.removeAttribute("userId");
+		session.removeAttribute("userNickname");
+		
 		return "user/login";
 	}
 	
