@@ -15,8 +15,8 @@
 		        	<div class="p-2">
 		        		<div class="mt-2" th:text="${card.contents}"></div>
 		        		<div class="mt-2 ml-1">
-							<i class="bi bi-heart-fill text-danger unlike-icon"></i> 1
-							<!-- <i class="bi bi-chat-left ml-2"></i>1 -->
+							<i class="bi bi-heart text-danger like-btn" th:data-post-id="${card.postId}"></i> 1
+							<!-- <i class="bi bi-chat-left ml-2"></i>1  -->
 		        		</div>
 					</div>
 					<hr>
@@ -35,4 +35,30 @@
 	            	<i class="bi bi-plus-circle-fill text-dark" style="font-size: 50px;"></i>
 	       		</a>        	
         </section>
+        
+        <script layout:fragment="script">
+        	$(document).ready(function(){
+        		$(".like-btn").on("click", function(){
+        			// 이벤트가 발생한 태그 객체
+        			let postId = $(this).data("post-id");
+        			
+        			$.ajax({
+        				type:"post"
+        				, url: "/post/like"
+        				, data:{"postId":postId}
+        				, success:function(response) {
+        					if(response.result == "success") {
+								location.reload();
+							} else {
+								alert("좋아요 실패");
+							}
+        				}
+        				,error:function() {
+        					alert("좋아요 에러!");	
+        				}
+        				 
+        			});
+        		});
+        	});
+        </script>
 </html>
