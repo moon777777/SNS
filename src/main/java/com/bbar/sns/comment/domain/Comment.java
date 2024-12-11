@@ -26,8 +26,8 @@ public class Comment {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	@Column(name="loginId")
-	private int loginId;
+	@Column(name="userId")
+	private int userId;
 	
 	@Column(name="postId")
 	private int postId;

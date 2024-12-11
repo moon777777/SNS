@@ -32,7 +32,7 @@ public class CommentRestController {
 		
 		Map<String, String> resultMap = new HashMap<>();
 		
-		if(commentService.addComment(postId, contents)) {
+		if(commentService.addComment(userId, postId, contents)) {
 			resultMap.put("result", "success");
 		} else {
 			resultMap.put("result", "fail");
