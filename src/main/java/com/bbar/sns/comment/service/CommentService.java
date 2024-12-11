@@ -14,16 +14,17 @@ public class CommentService {
 		this.commentRepository = commentRepository;
 	}
 	
-	public boolean addComment(String contents) {
+	public boolean addComment(int postId, String contents) {
 		
 		Comment comment = Comment.builder()
+		.postId(postId)
 		.contents(contents)
 		.build();
 		
 		// try catch랑 if else 랑 뭐가 더 나은 환경인지 검색
 		try {
-			 int count = commentRepository.insertComment(contents);
-			return count == 1;
+			 commentRepository.save(comment);
+			return true;
 		} catch(Exception e) {
 			return false;
 		}
