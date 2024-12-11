@@ -14,11 +14,11 @@ public class CommentService {
 		this.commentRepository = commentRepository;
 	}
 	
-	public boolean addComment(int postId, int userId, String contents) {
+	public boolean addComment(int userId, int postId, String contents) {
 		
 		Comment comment = Comment.builder()
-		.postId(postId)
 		.userId(userId)
+		.postId(postId)
 		.contents(contents)
 		.build();
 		

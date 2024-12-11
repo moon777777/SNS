@@ -25,7 +25,7 @@
 							<b>댓글</b> 귀여워
 						</div>
 						<div class="d-flex justify-content-between p-2">
-							<input type="text" class="mr-1 form-control col-10" id="commentInput" placeholder="댓글 달기">
+							<input type="text" class="mr-1 form-control col-10" th:id="|commentInput${card.postId}|" placeholder="댓글 달기">
 							<button type="button" class="btn btn-info col-2 comment-btn" th:data-post-id="${card.postId}">게시</button>
 						</div>
 					</div>
@@ -40,8 +40,10 @@
         	$(document).ready(function(){
         		
         		$(".comment-btn").on("click", function(){
-        			let comment = $("#commentInput").val();
+        			
+        			// let comment = $(this).prev().val();
         			let postId = $(this).data("post-id");
+        			let comment = $("#commentInput" + postId).val();
         			
         			if(comment == "") {
         				alert("댓글을 입력해주세요");
