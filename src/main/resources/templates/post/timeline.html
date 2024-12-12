@@ -8,14 +8,17 @@
         	<div class="time-box">
 	        	<div class="border rounded my-3	" th:each="card:${cardList}">
 	        		<div class="d-flex justify-content-between">
-		        		<div class = "p-2" th:text="${card.nickname}"><i class="bi bi-person-fill"></i></div>
+	        			<div class="d-flex p-2">
+			        		<i class="bi bi-person-fill mr-1"></i><div th:text="|${card.nickname}|"></div>	        			
+	        			</div>
 						<div class="p-2"><i class="bi bi-three-dots-vertical"></i></div>
 	        		</div>
 	        		<img class= "w-100" th:src="${card.imagePath}">        	
 		        	<div class="p-2">
 		        		<div class="mt-2" th:text="${card.contents}"></div>
 		        		<div class="mt-2 ml-1">
-							<i class="bi bi-heart text-danger like-btn" th:data-post-id="${card.postId}"></i> 1
+		        			<i th:if="${card.userLike}" class="bi bi-heart-fill text-danger like-btn" th:data-post-id="${card.postId}"></i ><span th:text="${card.likeCount}"></span>
+							<i th:unless="${card.userLike}" class="bi bi-heart text-danger like-btn" th:data-post-id="${card.postId}"></i> <span th:text="${card.likeCount}"></span>
 							<!-- <i class="bi bi-chat-left ml-2"></i>1  -->
 		        		</div>
 					</div>
@@ -26,7 +29,7 @@
 						</div>
 						<div class="d-flex justify-content-between p-2">
 							<input type="text" class="mr-1 form-control col-10" th:id="|commentInput${card.postId}|" placeholder="댓글 달기">
-							<button type="button" class="btn btn-info col-2 comment-btn" th:data-post-id="${card.postId}">게시</button>
+							<button type="button" class="btn btn-secondary col-2 comment-btn" th:data-post-id="${card.postId}">게시</button>
 						</div>
 					</div>
 	        	</div>

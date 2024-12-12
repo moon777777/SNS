@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bbar.sns.common.FileManager;
+import com.bbar.sns.like.service.LikeService;
 import com.bbar.sns.post.domain.Post;
 import com.bbar.sns.post.dto.CardDTO;
 import com.bbar.sns.post.repository.PostRepository;
@@ -18,11 +19,13 @@ public class PostService {
 	
 	private PostRepository postRepository;
 	private UserService userService;
+	private LikeService likeService;
 	
 	
-	public PostService(PostRepository postRepository, UserService userService) {
+	public PostService(PostRepository postRepository, UserService userService, LikeService likeService) {
 		this.postRepository = postRepository;
 		this.userService = userService;
+		this.likeService = likeService;
 	}
 	
 	public boolean addPost(int userId, String contents, MultipartFile file) {   
@@ -46,11 +49,15 @@ public class PostService {
 		for(Post post:postList) {
 			
 			int userId = post.getUserId(); //DTO
+			int likeCount = likeService.getLikeCount(post.getId());
+			boolean userLike = likeService.userLike(userId, post.getId());
 			User user = userService.getUserById(userId);
 			
 			CardDTO card = CardDTO.builder()
 			.postId(post.getId())
 			.userId(userId)
+			.likeCount(likeCount)
+			.userLike(userLike)
 			.contents(post.getContents())
 			.imagePath(post.getImagePath())
 			.nickname(user.getNickname())

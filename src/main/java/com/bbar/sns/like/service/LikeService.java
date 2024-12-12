@@ -1,5 +1,7 @@
 package com.bbar.sns.like.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.bbar.sns.like.domain.Like;
@@ -27,6 +29,22 @@ public class LikeService {
 		} catch(Exception e) {
 			return false;
 		}
+	}
+	
+	public int getLikeCount(int postId) {
+		return likeRepository.countByPostId(postId);
+	}
+	
+	public boolean userLike(int userId, int postId) {
+		int count = likeRepository.countByUserIdAndPostId(userId, postId);
+		
+		return count >= 1;
+	}
+	
+	public Like getLike(int userId, int postId) {
+		Optional<Like> optionalLike = likeRepository.findByUserIdAndPostId(userId, postId);
+		
+		return optionalLike.orElse(null);
 	}
 
 }

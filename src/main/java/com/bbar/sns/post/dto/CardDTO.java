@@ -14,5 +14,8 @@ public class CardDTO {
 	private String imagePath;
 	
 	private String nickname;
-
+	
+	private int likeCount;
+	private boolean userLike;
+	
 }
