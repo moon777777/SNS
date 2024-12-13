@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bbar.sns.comment.domain.Comment;
+import com.bbar.sns.comment.dto.CommentDTO;
 import com.bbar.sns.comment.service.CommentService;
 import com.bbar.sns.common.FileManager;
 import com.bbar.sns.like.service.LikeService;
@@ -57,7 +57,7 @@ public class PostService {
 			boolean isLike = likeService.isLike(loginUserId, post.getId());
 			User user = userService.getUserById(userId);
 			
-			List<Comment> commentList = commentService.getCommentList(post.getId());
+			List<CommentDTO> commentList = commentService.getCommentList(post.getId());
 			
 			CardDTO card = CardDTO.builder()
 			.postId(post.getId())

@@ -1,19 +1,25 @@
 package com.bbar.sns.comment.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.bbar.sns.comment.domain.Comment;
+import com.bbar.sns.comment.dto.CommentDTO;
 import com.bbar.sns.comment.repository.CommentRepository;
+import com.bbar.sns.user.domain.User;
+import com.bbar.sns.user.service.UserService;
 
 @Service
 public class CommentService {
 	
 	private CommentRepository commentRepository;
+	private UserService userService;
 	
-	public CommentService(CommentRepository commentRepository) {
+	public CommentService(CommentRepository commentRepository, UserService userService) {
 		this.commentRepository = commentRepository;
+		this.userService = userService;
 	}
 	
 	public boolean addComment(int userId, int postId, String contents) {
@@ -33,7 +39,28 @@ public class CommentService {
 		}
 	}
 	
-	public List<Comment> getCommentList(int postId) {
-		return commentRepository.findByPostId(postId);
+	public List<CommentDTO> getCommentList(int postId) {
+		
+		List<Comment> commentList = commentRepository.findByPostId(postId);
+		
+		List<CommentDTO> commentDTOList = new ArrayList<>();
+		
+		for(Comment comment: commentList) {
+			
+			int userId = comment.getUserId();
+			User user = userService.getUserById(userId);
+			
+			CommentDTO commentDTO = CommentDTO.builder()
+			.commentId(comment.getId())
+			.userId(userId)
+			.nickname(user.getNickname())
+			.contents(comment.getContents())
+			.build();
+			
+			commentDTOList.add(commentDTO);
+			
+		}
+		return  commentDTOList;
+	
 	}
 }
