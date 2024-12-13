@@ -1,5 +1,9 @@
 package com.bbar.sns.post.dto;
 
+import java.util.List;
+
+import com.bbar.sns.comment.domain.Comment;
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,6 +20,8 @@ public class CardDTO {
 	private String nickname;
 	
 	private int likeCount;
-	private boolean userLike;
+	private boolean isLike;
+	
+	List<Comment> commentList;
 	
 }

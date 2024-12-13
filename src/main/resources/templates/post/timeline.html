@@ -17,15 +17,18 @@
 		        	<div class="p-2">
 		        		<div class="mt-2" th:text="${card.contents}"></div>
 		        		<div class="mt-2 ml-1">
-		        			<i th:if="${card.userLike}" class="bi bi-heart-fill text-danger like-btn" th:data-post-id="${card.postId}"></i ><span th:text="${card.likeCount}"></span>
-							<i th:unless="${card.userLike}" class="bi bi-heart text-danger like-btn" th:data-post-id="${card.postId}"></i> <span th:text="${card.likeCount}"></span>
+		        			<i th:if="${card.isLike}" class="bi bi-heart-fill text-danger like-btn" th:data-post-id="${card.postId}"></i>
+							<i th:unless="${card.isLike}" class="bi bi-heart text-danger like-btn" th:data-post-id="${card.postId}"></i>
+							 <span th:text="${card.likeCount}"></span>
 							<!-- <i class="bi bi-chat-left ml-2"></i>1  -->
 		        		</div>
 					</div>
 					<hr>
 					<div class="comment-box">
 						<div class="p-2">
-							<b>댓글</b> 귀여워
+							<div th:each="comment:${card.commentList}">
+								<b th:text="${comment.userId}"></b> <span th:text="${comment.contents}"></span>
+							</div>
 						</div>
 						<div class="d-flex justify-content-between p-2">
 							<input type="text" class="mr-1 form-control col-10" th:id="|commentInput${card.postId}|" placeholder="댓글 달기">

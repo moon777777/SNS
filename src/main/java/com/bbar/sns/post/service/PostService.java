@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bbar.sns.comment.domain.Comment;
+import com.bbar.sns.comment.service.CommentService;
 import com.bbar.sns.common.FileManager;
 import com.bbar.sns.like.service.LikeService;
 import com.bbar.sns.post.domain.Post;
@@ -20,12 +22,14 @@ public class PostService {
 	private PostRepository postRepository;
 	private UserService userService;
 	private LikeService likeService;
+	private CommentService commentService;
 	
 	
-	public PostService(PostRepository postRepository, UserService userService, LikeService likeService) {
+	public PostService(PostRepository postRepository, UserService userService, LikeService likeService, CommentService commentService) {
 		this.postRepository = postRepository;
 		this.userService = userService;
 		this.likeService = likeService;
+		this.commentService = commentService;
 	}
 	
 	public boolean addPost(int userId, String contents, MultipartFile file) {   
@@ -39,7 +43,7 @@ public class PostService {
 		}
     }
 	
-	public List<CardDTO> getPostList() {
+	public List<CardDTO> getPostList(int loginUserId) {
 		
 		// 조회된 게시글마다 작성자의 로그인 ID 얻어오기
 		
@@ -50,17 +54,20 @@ public class PostService {
 			
 			int userId = post.getUserId(); //DTO
 			int likeCount = likeService.getLikeCount(post.getId());
-			boolean userLike = likeService.userLike(userId, post.getId());
+			boolean isLike = likeService.isLike(loginUserId, post.getId());
 			User user = userService.getUserById(userId);
+			
+			List<Comment> commentList = commentService.getCommentList(post.getId());
 			
 			CardDTO card = CardDTO.builder()
 			.postId(post.getId())
 			.userId(userId)
 			.likeCount(likeCount)
-			.userLike(userLike)
+			.isLike(isLike)
 			.contents(post.getContents())
 			.imagePath(post.getImagePath())
 			.nickname(user.getNickname())
+			.commentList(commentList)
 			.build();
 			
 			cardList.add(card);

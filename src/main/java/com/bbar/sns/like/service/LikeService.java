@@ -35,10 +35,14 @@ public class LikeService {
 		return likeRepository.countByPostId(postId);
 	}
 	
-	public boolean userLike(int userId, int postId) {
+	public boolean isLike(int userId, int postId) {
 		int count = likeRepository.countByUserIdAndPostId(userId, postId);
 		
-		return count >= 1;
+		if(count > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public Like getLike(int userId, int postId) {

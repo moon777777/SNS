@@ -1,5 +1,7 @@
 package com.bbar.sns.comment.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.bbar.sns.comment.domain.Comment;
@@ -29,5 +31,9 @@ public class CommentService {
 		} catch(Exception e) {
 			return false;
 		}
+	}
+	
+	public List<Comment> getCommentList(int postId) {
+		return commentRepository.findByPostId(postId);
 	}
 }

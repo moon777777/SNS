@@ -34,6 +34,7 @@ public class PostRestController {
 			
 			Map<String, String> resultMap = new HashMap<>();
 			
+			
 			if(postService.addPost(userId, contents, file)) {
 				resultMap.put("result", "success");
 			} else {
