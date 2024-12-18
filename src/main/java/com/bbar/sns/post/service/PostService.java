@@ -2,6 +2,7 @@ package com.bbar.sns.post.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,21 +34,28 @@ public class PostService {
 	}
 	
 	public boolean addPost(int userId, String contents, MultipartFile file) {   
-
-        try {
+  
         	String imagePath = FileManager.savaFile(userId, file);
-        	int count = postRepository.insertPost(userId, contents, imagePath);
-			return count == 1;
-        } catch(Exception e) {
-			return false;
-		}
+    		
+    		Post post = Post.builder()
+    		.userId(userId)
+    		.contents(contents)
+    		.imagePath(imagePath)
+    		.build();
+    		
+    		try {			
+    			postRepository.save(post);
+    			return true;
+    		} catch(Exception e) {
+    			return false;
+    		}
     }
 	
 	public List<CardDTO> getPostList(int loginUserId) {
 		
 		// 조회된 게시글마다 작성자의 로그인 ID 얻어오기
 		
-		List<Post> postList =  postRepository.selectPost();
+		List<Post> postList =  postRepository.findAllByOrderByIdDesc();
 		
 		List<CardDTO> cardList = new ArrayList<>();
 		for(Post post:postList) {
@@ -75,6 +83,30 @@ public class PostService {
 		}
 
 		return cardList;
+	}
+	
+	public boolean deletePost(int id, int userId) {
+		
+		Optional<Post> optionalPost = postRepository.findById(id);
+		
+		if(optionalPost.isPresent()) {
+			Post post = optionalPost.get();
+			
+			if(post.getUserId() == userId) {				
+				FileManager.removeFile(post.getImagePath());
+				likeService.deleteLikeByPostId(id);
+				commentService.deleteCommentByPostId(id);
+				
+				postRepository.delete(post);
+				return true;
+			} else {
+				return false;
+			}
+			
+		} else {
+			return false;
+		}
+		
 	}
 	
 }

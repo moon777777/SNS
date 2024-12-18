@@ -11,16 +11,15 @@
 	        			<div class="d-flex p-2">
 			        		<i class="bi bi-person-fill mr-1"></i><div th:text="|${card.nickname}|"></div>	        			
 	        			</div>
-						<div class="p-2"><i class="bi bi-three-dots-vertical optionBtn" id="optionIcon"></i></div>
+						<div class="p-2"><i th:if="${card.userId == session.userId}"  class="bi bi-three-dots-vertical more-btn" th:data-post-id="${card.postId}" data-toggle="modal" data-target="#moreModal"></i></div>
 	        		</div>
 	        		<img class= "w-100" th:src="${card.imagePath}">        	
 		        	<div class="p-2">
 		        		<div class="mt-2" th:text="${card.contents}"></div>
 		        		<div class="mt-2 ml-1">
-		        			<i th:if="${card.isLike}" class="bi bi-heart-fill text-danger like-btn" th:data-post-id="${card.postId}"></i>
+		        			<i th:if="${card.isLike}" class="bi bi-heart-fill text-danger unlike-btn" th:data-post-id="${card.postId}"></i>
 							<i th:unless="${card.isLike}" class="bi bi-heart text-danger like-btn" th:data-post-id="${card.postId}"></i>
 							 <span th:text="${card.likeCount}"></span>
-							<!-- <i class="bi bi-chat-left ml-2"></i>1  -->
 		        		</div>
 					</div>
 					<hr>
@@ -39,14 +38,77 @@
         	</div>
 	        	<a href="/post/create-view" class="d-flex align-items-end" style="position: fixed; bottom: 80px; right: 100px;">
 	            	<i class="bi bi-plus-circle-fill text-dark" style="font-size: 50px;"></i>
-	       		</a>        	
+	       		</a>
+			
+			<!-- Modal -->
+			<div class="modal fade" id="moreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered" role="document">
+			    <div class="modal-content">
+			      
+			      <div class="modal-body text-center">
+			        <a href="#" id="deleteBtn">삭제하기</a>
+			      </div>
+			      
+			    </div>
+			  </div>
+			</div>  
+			     	
         </section>
         
         <script layout:fragment="script">
         	$(document).ready(function(){
         		
-        		$(".optionBtn").on("click", function(){
-        			alert();
+				$(".more-btn").on("click", function() {
+    				
+    				let postId = $(this).data("post-id");
+    				// modal 의 삭제 버튼인 a 태그에 data-post-id 값을 추가한다
+    				$("#deleteBtn").data("post-id", postId);
+    				
+    			});
+    			
+    			$("#deleteBtn").on("click", function() {
+    				
+    				let postId = $(this).data("post-id");
+    				
+    				$.ajax({
+    					type:"delete"
+    					, url:"/post/delete"
+    					, data:{"id":postId}
+    					, success:function(response) {
+    						
+    						if(response.result == "success") {
+    							location.reload();
+    						} else {
+    							alert("삭제 실패!");
+    						}
+    						
+    					}
+    					, error:function() {
+    						alert("삭제 에러!");
+    					}
+    				});
+    				
+    			});
+        		
+        		$(".unlike-btn").on("click", function(){
+        			let postId = $(this).data("post-id");
+        			
+        			$.ajax({
+        				type:"delete"
+        				, url:"/post/unlike"
+        				, data:{"postId":postId}
+        				, success:function(response) {
+        					if(response.result == "success") {
+        						location.reload();
+        					} else {
+        						alert("좋아요 취소 실패")
+        					}
+        				}
+        				, error:function() {
+        					alert("삭제 에러");
+        				}
+        			});
+        			
         			
         		});
         		

@@ -4,28 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.bbar.sns.post.domain.Post;
 
-@Mapper
-public interface PostRepository {
+public interface PostRepository extends JpaRepository<Post, Integer> {
 	
-	public int insertPost(
-			@Param("userId") int userId
-			, @Param("contents") String contents
-			, @Param("imagePath") String imagePath
-			);
-	
-//	public int selecttPost(
-//			@Param("userId") int userId
-//			, @Param("contents") String contents
-//			, @Param("imagePath") String imagePath
-//			);
-	
-	public List<Post> selectPost();
-
-	
-	
-	
+	public List<Post> findAllByOrderByIdDesc();
 
 }

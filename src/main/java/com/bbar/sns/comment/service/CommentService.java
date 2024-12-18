@@ -63,4 +63,8 @@ public class CommentService {
 		return  commentDTOList;
 	
 	}
+	// 삭제 개수가 모호해서 있을수도 없을수도
+	public void deleteCommentByPostId(int postId) {
+		commentRepository.deleteByPostId(postId);
+	}
 }
