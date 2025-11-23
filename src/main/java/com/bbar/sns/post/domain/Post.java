@@ -18,24 +18,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="`post`")
 @Getter
-@Entity
 public class Post {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	@Column(name="userId")
 	private int userId;
 	private String contents;
-	@Column(name="imagePath")
 	private String imagePath;
-	@CreationTimestamp
-	@Column(name="createdAt")
 	private LocalDateTime createdAt;
-	@CreationTimestamp
-	@Column(name="updatedAt")
 	private LocalDateTime updatedAt;
 	
 	public int getId() {

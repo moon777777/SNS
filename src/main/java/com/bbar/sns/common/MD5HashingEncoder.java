@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class MD5HashingEncoder {
 	
-public static String encode(String message) {
+	public static String encode(String message) {
 		
 		String result = "";
 		try {

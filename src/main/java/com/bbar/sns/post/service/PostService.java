@@ -25,7 +25,6 @@ public class PostService {
 	private LikeService likeService;
 	private CommentService commentService;
 	
-	
 	public PostService(PostRepository postRepository, UserService userService, LikeService likeService, CommentService commentService) {
 		this.postRepository = postRepository;
 		this.userService = userService;
@@ -44,7 +43,7 @@ public class PostService {
     		.build();
     		
     		try {			
-    			postRepository.save(post);
+    			postRepository.insertPost(userId, contents, imagePath);
     			return true;
     		} catch(Exception e) {
     			return false;
@@ -55,7 +54,7 @@ public class PostService {
 		
 		// 조회된 게시글마다 작성자의 로그인 ID 얻어오기
 		
-		List<Post> postList =  postRepository.findAllByOrderByIdDesc();
+		List<Post> postList =  postRepository.findAllPosts();
 		
 		List<CardDTO> cardList = new ArrayList<>();
 		for(Post post:postList) {
@@ -87,26 +86,19 @@ public class PostService {
 	
 	public boolean deletePost(int id, int userId) {
 		
-		Optional<Post> optionalPost = postRepository.findById(id);
-		
-		if(optionalPost.isPresent()) {
-			Post post = optionalPost.get();
+		Post post = postRepository.findById(id);
 			
-			if(post.getUserId() == userId) {				
-				FileManager.removeFile(post.getImagePath());
-				likeService.deleteLikeByPostId(id);
-				commentService.deleteCommentByPostId(id);
+		if(post.getUserId() == userId) {				
+			FileManager.removeFile(post.getImagePath());
+			likeService.deleteLikeByPostId(id);
+			commentService.deleteCommentByPostId(id);
 				
-				postRepository.delete(post);
-				return true;
-			} else {
-				return false;
-			}
-			
+			postRepository.deletePost(id);
+			return true;
 		} else {
 			return false;
 		}
-		
+			
 	}
 	
 }
